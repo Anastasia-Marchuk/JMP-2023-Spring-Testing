@@ -75,8 +75,3 @@ ENGINE= InnoDB;
  and others..
 
 
-ALTER TABLE User    
-MODIFY email varchar(32); 
-
-ALTER TABLE User    
-add wallet double; 
