@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta content="text/html" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>User</title>
+
+    <style>
+        /* внешние границы таблицы серого цвета толщиной 1px */
+        table {
+            border-collapse: collapse;
+        }
+
+        th {
+            font-size: 13px;
+            font-weight: normal;
+            background: #b9c9fe;
+            color: #039;
+            padding: 8px;
+            border: 1px solid grey;
+        }
+        td {
+            background: #e8edff;
+            color: #669;
+            padding: 8px;
+            border: 1px solid grey;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+
+<section>
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>email</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${allUsers}">
+                <td th:text="${user.getId()}">1</td>
+                <td th:text="${user.getName()}">3</td>
+                <td th:text="${user.getEmail()}">PREMIUM</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta content="text/html" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Ticket</title>
+    <style>
+   /* внешние границы таблицы серого цвета толщиной 1px */
+table {
+    border-collapse: collapse;
+  }
+
+th {
+  font-size: 13px;
+  font-weight: normal;
+  background: #b9c9fe;
+  color: #039;
+  padding: 8px;
+  border: 1px solid grey;
+}
+td {
+  background: #e8edff;
+  color: #669;
+  padding: 8px;
+  border: 1px solid grey;
+}
+
+  </style>
+</head>
+<body>
+
+<p><a href="/">
+    <button type="submit">Back</button>
+<p></a></p>
+
+
+<p><a href="/newTicket">
+    <button type="submit">Create new ticket</button>
+<p></a></p>
+
+<div>
+    <button><a class="buttonFind" href="/preparePDF">Find all tickets by user</a></button>
+</div>
+
+<p></p>
+
+<form method="POST" action="/xml" enctype="multipart/form-data">
+
+            <p path="file">Choose a file for adding tickets
+            <input type="file" name="file" />
+            <input type="submit" value="Submit" />
+            </p>
+
+</form>
+
+
+
+<section>
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>eventId</th>
+            <th>userId</th>
+            <th>category</th>
+            <th>place</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="ticket : ${allTickets}">
+            <td th:text="${ticket.getId()}">1</td>
+            <td th:text="${ticket.getEventId()}">1</td>
+            <td th:text="${ticket.getUserId()}">2</td>
+            <td th:text="${ticket.getCategory()}">PREMIUM</td>
+            <td th:text="${ticket.getPlace()}">8</td>
+            <td>
+                <a class="aDelete" th:href="@{/deleteTicket/{id}(id=${ticket.getEventId})}">Cancel</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <p></p>
+
+
+</div>
+</section>
+
+</body>
+</html>

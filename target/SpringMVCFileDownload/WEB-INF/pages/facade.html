@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<big style="font-size: 200%;"><b><td th:text=${heading}></td></b></big>
+	<style>
+        /* внешние границы таблицы серого цвета толщиной 1px */
+table {
+    border-collapse: collapse;
+  }
+
+th {
+  font-size: 13px;
+  font-weight: normal;
+  background: #b9c9fe;
+  color: #039;
+  padding: 8px;
+  border: 1px solid grey;
+}
+td {
+  background: #e8edff;
+  color: #669;
+  padding: 8px;
+  border: 1px solid grey;
+}
+
+        .aPdf {
+            color: yellowgreen;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<p><td th:text="${message}"></td></p>
+<p><a href="/">
+
+
+	<button type="submit">Back</button>
+<p></a></p>
+
+<table border="1">
+
+
+
+
+	<tbody>
+	<div th:if="${not #lists.isEmpty(allUsers)}">
+		<tr>
+			<th >Id</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th></th>
+		</tr>
+
+		<tr th:each="user : ${allUsers}">
+			<td th:text="${user.getId()}">id</td>
+			<td th:text="${user.getName()}">name</td>
+			<td th:text="${user.getEmail()}">email</td>
+			<td>
+				<a class="aEdit" href="#">Edit</a>
+				<a class="aDelete" th:href="@{/delete/{id}(id=${user.getId})}">Delete</a>
+			</td>
+		</tr>
+	</div>
+
+
+
+
+	</tbody>
+</table>
+
+</body>
+</html>

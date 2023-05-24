@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <big style="font-size: 200%;"><b><td th:text=${heading}></td></b></big>
+    <style>
+   /* внешние границы таблицы серого цвета толщиной 1px */
+table {
+    border-collapse: collapse;
+  }
+
+th {
+  font-size: 13px;
+  font-weight: normal;
+  background: #b9c9fe;
+  color: #039;
+  padding: 8px;
+  border: 1px solid grey;
+}
+td {
+  background: #e8edff;
+  color: #669;
+  padding: 8px;
+  border: 1px solid grey;
+}
+  </style>
+</head>
+<body>
+
+<p><a href="/">
+    <button type="submit">Back</button>
+<p></a></p>
+
+<p><a href="/newEvent">
+    <button type="submit">Create new event</button>
+<p></a></p>
+
+<section>
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="event : ${allEvents}">
+                <td th:text="${event.getTitle()}"></td>
+                <td th:text="${event.getId()}"></td>
+                <td th:text="${event.getDate()}"></td>
+                <td th:text="${event.getPrice()}"></td>
+                <td>
+                    <a class="aDelete" th:href="@{/deleteEvent/{id}(id=${event.getId})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+<p>
+<a href="/">
+    <button><a th:href="@{/pdf}">Open PDF</a></button>
+</a>
+
+</p>
+
+
+</body>
+
+</body>
+</html>

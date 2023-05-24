@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <p><a href="/">
+        <button type="submit">Back</button>
+    <p></a></p>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" th:text="${method}">Find users by email</span>
+    </div>
+</nav>
+
+<section>
+    <form th:action="@{/user/email}" th:method="get">
+        <div class="input-group mb-3">
+            <input type="text" name="email" class="form-control" placeholder="email">
+            <a href="/user/email">
+                <button type="submit">Find</button>
+            </a>
+        </div>
+    </form>
+</section>
+
+</body>
+</html>

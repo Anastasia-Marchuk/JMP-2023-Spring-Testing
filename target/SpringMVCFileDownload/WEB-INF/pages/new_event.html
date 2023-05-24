@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <p><a href="/">
+        <button type="submit">Back</button>
+    <p></a></p>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" th:text="${method}">Event create</span>
+    </div>
+</nav>
+
+<section>
+    <form th:action="@{/createEvent}" th:method="get">
+        <div class="input-group mb-3">
+            <input type="text" name="title" class="form-control" placeholder="Title">
+            <input type="double" name="price" class="form-control" placeholder="Price">
+            <a href="/createEvent">
+                <button type="submit">Save</button>
+            </a>
+        </div>
+    </form>
+</section>
+
+
+</body>
+</html>

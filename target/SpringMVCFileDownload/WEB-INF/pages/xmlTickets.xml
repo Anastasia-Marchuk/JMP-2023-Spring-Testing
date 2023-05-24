@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TicketXMLlist>
+<ticket id="7" eventId="1" userId="1" category="PREMIUM" place="1"/>
+<ticket id="8" eventId="0" userId="2" category="BAR" place="3"/>
+</TicketXMLlist>

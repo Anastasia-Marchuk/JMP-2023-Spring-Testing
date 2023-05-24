@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<TicketDto>
+
+    <listTickets>
+        <eventId>10</eventId>
+        <userId>1</userId>
+        <category>PREMIUM</category>
+        <place>1</place>
+    </listTickets>
+    <listTickets>
+        <eventId>11</eventId>
+        <userId>1</userId>
+        <category>STANDARD</category>
+        <place>1</place>
+    </listTickets>
+
+
+</TicketDto>

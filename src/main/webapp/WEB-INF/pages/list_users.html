@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta content="text/html" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>User</title>
+
+    <style>
+        /* внешние границы таблицы серого цвета толщиной 1px */
+        table {
+            border-collapse: collapse;
+        }
+
+        th {
+            font-size: 13px;
+            font-weight: normal;
+            background: #b9c9fe;
+            color: #039;
+            padding: 8px;
+            border: 1px solid grey;
+        }
+        td {
+            background: #e8edff;
+            color: #669;
+            padding: 8px;
+            border: 1px solid grey;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+
+<header>
+    <div>
+        <button><a class="buttonAdd" href="/">Back</a></button>
+    </div>
+
+    <p></p>
+    <div>
+        <button><a class="buttonAdd" href="/new">Add User</a></button>
+    </div>
+    <p></p>
+
+    <p>
+    <div>
+        <button><a class="buttonFind" href="/email">Find all users by email</a></button>
+    </div>
+    </p>
+
+
+</header>
+
+<section>
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th >Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Wallet</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${allUsers}">
+                <td th:text="${user.getId()}">1</td>
+                <td th:text="${user.getName()}">Stacy</td>
+                <td th:text="${user.getEmail()}">stasy@gmail.com</td>
+                <td th:text="${user.getUserAccount().getMoney()}">100.00</td>
+                <td>
+                    <a class="aEdit" th:href="@{/update/{id}(id=${user.getId})}">Update</a>
+                    <a class="aDelete" th:href="@{/delete/{id}(id=${user.getId})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p></p>
+        <div>
+            <button><a th:href="@{/pdf}">Open PDF</a></button>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<beans-->
+<!--        xmlns="http://www.springframework.org/schema/beans"-->
+<!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--        xmlns:util="http://www.springframework.org/schema/util"-->
+<!--        xmlns:context="http://www.springframework.org/schema/context"-->
+<!--        xsi:schemaLocation="http://www.springframework.org/schema/beans-->
+<!--                        http://www.springframework.org/schema/beans/spring-beans.xsd-->
+<!--                        http://www.springframework.org/schema/util-->
+<!--                        https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">-->
+
+<!--    <context:component-scan base-package="jmp.amarchuk"/>-->
+
+<!--    <bean id="event1" class="jmp.amarchuk.model.Event">-->
+<!--        <property name="id" value="1"/>-->
+<!--        <property name="title" value="Test"/>-->
+<!--        <property name="date" value="11/01/2011"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="user1" class="jmp.amarchuk.model.User">-->
+<!--        <property name="id" value="1"/>-->
+<!--        <property name="name" value="Test"/>-->
+<!--        <property name="email" value="test@test.com"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="ticket1" class="jmp.amarchuk.model.Ticket">-->
+<!--        <property name="id" value="1"/>-->
+<!--        <property name="eventId" value="1"/>-->
+<!--        <property name="userId" value="1"/>-->
+<!--        <property name="category" value="PREMIUM"/>-->
+<!--        <property name="place" value="11"/>-->
+<!--    </bean>-->
+
+<!--    <util:list id="events" list-class="java.util.ArrayList" value-type="jmp.amarchuk.model.Event">-->
+<!--        <ref bean="event1"/>-->
+<!--    </util:list>-->
+
+<!--    <util:list id="users" list-class="java.util.ArrayList" value-type="jmp.amarchuk.model.User">-->
+<!--        <ref bean="user1"/>-->
+<!--    </util:list>-->
+
+<!--    <util:map id="tickets" map-class="java.util.HashMap" value-type="jmp.amarchuk.model.Ticket">-->
+<!--        <entry key="ticket: 1" value-ref="ticket1"/>-->
+<!--    </util:map>-->
+
+
+
+
+<!--    <bean id="eventDao" class="jmp.amarchuk.dao.EventDaoList"/>-->
+
+<!--    &lt;!&ndash;  DAO   &ndash;&gt;-->
+
+<!--    &lt;!&ndash;  Created across Autowired  &ndash;&gt;-->
+
+<!--    &lt;!&ndash;  SERVICE   &ndash;&gt;-->
+
+<!--    <bean id="eventService" class="jmp.amarchuk.service.EventServiceImpl">-->
+<!--        <constructor-arg index="0" ref="eventDaoList"/>-->
+<!--    </bean>-->
+<!--    <bean id="ticketService" class="jmp.amarchuk.service.TicketServiceImpl">-->
+<!--        <constructor-arg index="0" ref="ticketDaoList"/>-->
+<!--    </bean>-->
+<!--    <bean id="userService" class="jmp.amarchuk.service.UserServiceImpl">-->
+<!--        <constructor-arg index="0" ref="userDaoList"/>-->
+<!--    </bean>-->
+
+<!--    &lt;!&ndash;  FACADE  &ndash;&gt;-->
+
+<!--    <bean id="facadeImpl" class="jmp.amarchuk.facade.BookingFacadeImpl">-->
+<!--        <constructor-arg index="0" ref="eventService"/>-->
+<!--        <constructor-arg index="1" ref="ticketService"/>-->
+<!--        <constructor-arg index="2" ref="userService"/>-->
+<!--    </bean>-->
+
+
+<!--</beans>-->
