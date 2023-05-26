@@ -4,6 +4,7 @@ import jmp.amarchuk.model.Category;
 import jmp.amarchuk.model.Event;
 import jmp.amarchuk.model.Ticket;
 import jmp.amarchuk.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -57,4 +58,5 @@ public interface TicketService {
     User getUserById(long id);
 
 
+    void preloadTickets(MultipartFile file);
 }

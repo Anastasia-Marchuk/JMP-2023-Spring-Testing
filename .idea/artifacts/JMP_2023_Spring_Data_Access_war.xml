@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="JMP-2023-Spring-Data-Access:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>JMP-2023-Spring-Data-Access</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="SpringMVCFileDownload.war">
+      <element id="artifact" artifact-name="JMP-2023-Spring-Data-Access:war exploded" />
+    </root>
+  </artifact>
+</component>

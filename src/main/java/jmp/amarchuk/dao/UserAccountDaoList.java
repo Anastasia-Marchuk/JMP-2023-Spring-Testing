@@ -79,8 +79,12 @@ public class UserAccountDaoList implements  UserAccountDao {
         Query<UserAccount> theQuery=currentSession.createQuery("from UserAccount", UserAccount.class);
         List<UserAccount> accounts = new ArrayList<>();
         accounts=theQuery.getResultList();
-        int id=accounts.size();
-        userAccount.setId(id+1);
+        if (accounts.size()==0){
+            userAccount.setId(1);
+        } else {
+            int id= (int) accounts.get(accounts.size()-1).getId();
+            userAccount.setId(id+1);
+        }
         currentSession.save(userAccount);
         return userAccount;
     }

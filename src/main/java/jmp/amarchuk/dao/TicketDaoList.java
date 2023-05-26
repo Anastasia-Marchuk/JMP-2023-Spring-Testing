@@ -113,8 +113,16 @@ public class TicketDaoList implements TicketDao {
     public void preloadTickets(List<Ticket> list) {
 
         for (int i = 0; i <list.size() ; i++) {
+            Ticket ticket=list.get(i);
             long newId=tickets.size()+1;
-            tickets.put("ticket" + newId, list.get(i));
+            Session currentSession=sessionFactory.getCurrentSession();
+            Query<Ticket> theQuery=currentSession.createQuery("from Ticket", Ticket.class);
+            List<Ticket> ticketAll = new ArrayList<>();
+            ticketAll=theQuery.getResultList();
+            int id=ticketAll.size();
+            ticket.setId(id+1);
+            currentSession.save(ticket);
+
         }
     }
 

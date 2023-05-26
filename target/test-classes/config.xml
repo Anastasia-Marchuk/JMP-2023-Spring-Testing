@@ -1,76 +1,54 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<beans-->
 <!--        xmlns="http://www.springframework.org/schema/beans"-->
 <!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--        xmlns:util="http://www.springframework.org/schema/util"-->
 <!--        xmlns:context="http://www.springframework.org/schema/context"-->
-<!--        xsi:schemaLocation="http://www.springframework.org/schema/beans-->
-<!--                        http://www.springframework.org/schema/beans/spring-beans.xsd-->
-<!--                        http://www.springframework.org/schema/util-->
-<!--                        https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">-->
-
-<!--    <context:component-scan base-package="jmp.amarchuk"/>-->
-
-<!--    <bean id="event1" class="jmp.amarchuk.model.Event">-->
-<!--        <property name="id" value="1"/>-->
-<!--        <property name="title" value="Test"/>-->
-<!--        <property name="date" value="11/01/2011"/>-->
+<!--        xmlns:tx="http://www.springframework.org/schema/tx"-->
+<!--        xmlns:mvc="http://www.springframework.org/schema/mvc"-->
+<!--        xsi:schemaLocation="-->
+<!--  http://www.springframework.org/schema/beans-->
+<!--  http://www.springframework.org/schema/beans/spring-beans.xsd-->
+<!--  http://www.springframework.org/schema/context-->
+<!--  http://www.springframework.org/schema/context/spring-context.xsd-->
+<!--  http://www.springframework.org/schema/mvc-->
+<!--  http://www.springframework.org/schema/mvc/spring-mvc.xsd-->
+<!--  http://www.springframework.org/schema/tx-->
+<!--  http://www.springframework.org/schema/tx/spring-tx.xsd">-->
+<!--    &lt;!&ndash; Add support for component scanning &ndash;&gt;-->
+<!--    <context:component-scan base-package="jmp.amarchuk" />-->
+<!--    &lt;!&ndash; Add support for conversion, formatting and validation support &ndash;&gt;-->
+<!--    <mvc:annotation-driven/>-->
+<!--    &lt;!&ndash; Define Spring MVC view resolver &ndash;&gt;-->
+<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+<!--        <property name="prefix" value="/WEB-INF/pages/" />-->
+<!--        <property name="suffix" value=".html" />-->
 <!--    </bean>-->
-
-<!--    <bean id="user1" class="jmp.amarchuk.model.User">-->
-<!--        <property name="id" value="1"/>-->
-<!--        <property name="name" value="Test"/>-->
-<!--        <property name="email" value="test@test.com"/>-->
+<!--    &lt;!&ndash; Step 1: Define Database DataSource / connection pool &ndash;&gt;-->
+<!--    <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/jmp2023_SpringDataAccess" />-->
+<!--        <property name="username" value="anastasia" />-->
+<!--        <property name="password" value="130352" />-->
 <!--    </bean>-->
-
-<!--    <bean id="ticket1" class="jmp.amarchuk.model.Ticket">-->
-<!--        <property name="id" value="1"/>-->
-<!--        <property name="eventId" value="1"/>-->
-<!--        <property name="userId" value="1"/>-->
-<!--        <property name="category" value="PREMIUM"/>-->
-<!--        <property name="place" value="11"/>-->
+<!--    &lt;!&ndash; Step 2: Setup Hibernate session factory &ndash;&gt;-->
+<!--    <bean id="sessionFactory"-->
+<!--          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">-->
+<!--        <property name="dataSource" ref="myDataSource" />-->
+<!--        <property name="packagesToScan" value="jmp.amarchuk.model" />-->
+<!--        <property name="hibernateProperties">-->
+<!--            <props>-->
+<!--                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>-->
+<!--                <prop key="hibernate.show_sql">true</prop>-->
+<!--                <prop key="hibernate.default_schema">facingissuesonitdb</prop>-->
+<!--                <prop key="hibernate.hbm2ddl.auto">update</prop>-->
+<!--            </props>-->
+<!--        </property>-->
 <!--    </bean>-->
-
-<!--    <util:list id="events" list-class="java.util.ArrayList" value-type="jmp.amarchuk.model.Event">-->
-<!--        <ref bean="event1"/>-->
-<!--    </util:list>-->
-
-<!--    <util:list id="users" list-class="java.util.ArrayList" value-type="jmp.amarchuk.model.User">-->
-<!--        <ref bean="user1"/>-->
-<!--    </util:list>-->
-
-<!--    <util:map id="tickets" map-class="java.util.HashMap" value-type="jmp.amarchuk.model.Ticket">-->
-<!--        <entry key="ticket: 1" value-ref="ticket1"/>-->
-<!--    </util:map>-->
-
-
-
-
-<!--    <bean id="eventDao" class="jmp.amarchuk.dao.EventDaoList"/>-->
-
-<!--    &lt;!&ndash;  DAO   &ndash;&gt;-->
-
-<!--    &lt;!&ndash;  Created across Autowired  &ndash;&gt;-->
-
-<!--    &lt;!&ndash;  SERVICE   &ndash;&gt;-->
-
-<!--    <bean id="eventService" class="jmp.amarchuk.service.EventServiceImpl">-->
-<!--        <constructor-arg index="0" ref="eventDaoList"/>-->
+<!--    &lt;!&ndash; Step 3: Setup Hibernate transaction manager &ndash;&gt;-->
+<!--    <bean id="myTransactionManager"-->
+<!--          class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+<!--        <property name="sessionFactory" ref="sessionFactory"/>-->
 <!--    </bean>-->
-<!--    <bean id="ticketService" class="jmp.amarchuk.service.TicketServiceImpl">-->
-<!--        <constructor-arg index="0" ref="ticketDaoList"/>-->
-<!--    </bean>-->
-<!--    <bean id="userService" class="jmp.amarchuk.service.UserServiceImpl">-->
-<!--        <constructor-arg index="0" ref="userDaoList"/>-->
-<!--    </bean>-->
-
-<!--    &lt;!&ndash;  FACADE  &ndash;&gt;-->
-
-<!--    <bean id="facadeImpl" class="jmp.amarchuk.facade.BookingFacadeImpl">-->
-<!--        <constructor-arg index="0" ref="eventService"/>-->
-<!--        <constructor-arg index="1" ref="ticketService"/>-->
-<!--        <constructor-arg index="2" ref="userService"/>-->
-<!--    </bean>-->
-
-
+<!--    &lt;!&ndash; Step 4: Enable configuration of transactional behavior based on annotations &ndash;&gt;-->
+<!--    <tx:annotation-driven transaction-manager="myTransactionManager" />-->
 <!--</beans>-->

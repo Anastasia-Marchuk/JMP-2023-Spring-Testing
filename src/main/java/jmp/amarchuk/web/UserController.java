@@ -1,25 +1,14 @@
 package jmp.amarchuk.web;
 
-import jmp.amarchuk.dao.UserDao;
-import jmp.amarchuk.dao.UserDaoList;
-import jmp.amarchuk.facade.BookingFacade;
 import jmp.amarchuk.model.User;
 import jmp.amarchuk.model.UserAccount;
 import jmp.amarchuk.service.UserAccountService;
 import jmp.amarchuk.service.UserService;
 import jmp.amarchuk.web.handler.HandlerException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,7 +65,7 @@ public class UserController {
         model.addAttribute("allUsers",list);
         model.addAttribute("heading", "User with id "+id);
         LOGGER.info("Method start. UserController.");
-        return "facade";
+        return "list_users";
     }
 
     @GetMapping("/email")
@@ -155,7 +144,6 @@ public class UserController {
 
         user.setName(name);
         user.setEmail(email);
-//        user.setUserAccount(userAccount);
         User u=userService.createUser(user);
 
         UserAccount userAccount=new UserAccount();

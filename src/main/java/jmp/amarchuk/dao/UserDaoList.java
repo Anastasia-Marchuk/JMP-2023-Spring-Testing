@@ -26,6 +26,9 @@ public class UserDaoList implements UserDao {
 
     public UserDaoList() {}
 
+    public UserDaoList(SessionFactory sessionFactory) {
+    }
+
     @Override
     public User getUserById(long userId) {
         Session currentSession=sessionFactory.getCurrentSession();
@@ -60,11 +63,15 @@ public class UserDaoList implements UserDao {
     public User createUser(User user) {
 
         Session currentSession=sessionFactory.getCurrentSession();
-        Query<User> theQuery=currentSession.createQuery("from User", User.class);
+        Query<User> theQuery=currentSession.createQuery("from User order by 1", User.class);
         List<User> usersAll = new ArrayList<>();
         usersAll=theQuery.getResultList();
-        int id=usersAll.size();
-        user.setId(id+1);
+        if(usersAll.size()==0){
+            user.setId(1);
+        }else{
+            int id= (int) usersAll.get(usersAll.size()-1).getId();
+            user.setId(id+1);
+        }
         currentSession.save(user);
         return user;
     }

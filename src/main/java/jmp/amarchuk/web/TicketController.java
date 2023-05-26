@@ -1,8 +1,5 @@
 package jmp.amarchuk.web;
 
-import jmp.amarchuk.dao.TicketDaoList;
-import jmp.amarchuk.dao.UserDaoList;
-import jmp.amarchuk.facade.BookingFacade;
 import jmp.amarchuk.model.*;
 import jmp.amarchuk.service.EventService;
 import jmp.amarchuk.service.TicketService;

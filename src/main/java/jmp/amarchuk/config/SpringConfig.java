@@ -88,8 +88,6 @@ public class SpringConfig implements WebMvcConfigurer {
         properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         properties.put("hibernate.default_schema", env.getRequiredProperty("hibernate.default_schema"));
         properties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-//        properties.put("spring.jpa.hibernate.use-new-id-generator-mappings", env.getRequiredProperty("spring.jpa.hibernate.use-new-id-generator-mappings"));
-//        properties.put("spring.jpa.hibernate.ddl-auto", env.getRequiredProperty("spring.jpa.hibernate.ddl-auto"));
 
         return properties;
     }
