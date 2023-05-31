@@ -1,70 +1,61 @@
-package jmp.amarchuk.web;
+package jmp.amarchuk.REST;
 
-import jmp.amarchuk.facade.BookingFacade;
 import jmp.amarchuk.model.Event;
 import jmp.amarchuk.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * EventController implementation - annotation-based controller that will delegate to BookingFacade methods.
+ * EventRESTController implementation - annotation-based controller.
  *
  * @author Anastasiya Marchuk
  *
  */
-@Controller
-public class EventController {
+@RestController
+@RequestMapping("/api/event")
+public class EventRESTController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventRESTController.class);
 
     @Autowired
     EventService eventService;
 
-    @GetMapping("/allEvents")
-    public String getAllTickets(Model model) {
-        LOGGER.debug("Get all tickets");
+    @GetMapping("/events")
+    public List<Event> getAllTickets() {
+        LOGGER.debug("Get all events");
         List<Event> allEvents = eventService.getAllEvents();
-        model.addAttribute("allEvents", allEvents);
-        model.addAttribute("heading", "List of all events in DB");
-        return "list_events";
+        List<Event> jsonList=new ArrayList<>();
+        for (Event e: allEvents){
+           Event event=new Event();
+            event.setId(e.getId());
+            event.setTitle(e.getTitle());
+            event.setPrice(e.getPrice());
+            event.setDate(e.getDate());
+            jsonList.add(event);
+        }
+        return jsonList;
     }
 
-    @GetMapping("/newEvent")
-    public String create() {
-        LOGGER.debug("Create new event ");
-        return "new_event";
-    }
 
-    @GetMapping("/createEvent")
-    public String name(@RequestParam("title") String title, @RequestParam("price") double price) {
-        LOGGER.debug("Create event with title ({})", title);
-        Event event=new Event();
-        event.setTitle(title);
-        event.setPrice(price);
-        event.setDate(new Date());
+    @PostMapping("/create")
+    public Event name(@RequestBody Event event) {
         eventService.createEvent(event);
         LOGGER.info("Method start. UserController.");
-        return "redirect:/";
+        return event;
     }
 
-    @GetMapping("/deleteEvent/{id}")
-    public String delete(@PathVariable("id") int id, Model model) {
-        LOGGER.debug("Delete event with id ({}) ", id);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
         eventService.deleteEvent(id);
-        List<Event> allEvents = eventService.getAllEvents();
-        model.addAttribute("allEvents", allEvents);
-        model.addAttribute("heading", "List of all events in DB");
         LOGGER.info("Method start. UserController.");
-        return "list_events";
+        return "Delete event with id - "+id;
     }
 
 }

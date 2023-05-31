@@ -47,20 +47,22 @@ public class TicketDaoList implements TicketDao {
 //        return ticket;
 //    }
 //
-//    @Override
-//    public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-//        long id = user.getId();
-//        return tickets.values().stream().filter(o -> o.getUserId() == id).collect(Collectors.toList());
-//    }
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Category category) {
         return null;
+
     }
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return null;
+        List <Ticket> list=new LinkedList<>();
+        Session currentSession=sessionFactory.getCurrentSession();
+        Query<Ticket> theQuery=currentSession.createQuery("from Ticket where userId=id", Ticket.class);
+        theQuery.setParameter("id", user.getId());
+        list=theQuery.getResultList();
+
+        return list;
     }
 
     @Override

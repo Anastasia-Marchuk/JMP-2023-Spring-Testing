@@ -1,4 +1,4 @@
-package jmp.amarchuk.web;
+package jmp.amarchuk.REST;
 
 import jmp.amarchuk.model.User;
 import jmp.amarchuk.model.UserAccount;
@@ -8,158 +8,116 @@ import jmp.amarchuk.web.handler.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * UserController implementation - annotation-based controller that will delegate to BookingFacade methods.
+ * UserRestController implementation - annotation-based controller.
  *
  * @author Anastasiya Marchuk
  *
  */
-@Controller
-public class UserController {
+@RestController
+@RequestMapping("/api/user")
+public class UserRESTController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRESTController.class);
 
     @Autowired
     UserService userService;
     @Autowired
     UserAccountService userAccountService;
 
-    @GetMapping("/")
-    public String start(Model model) {
-        LOGGER.debug("get start page");
-        model.addAttribute("message","Welcome!");
-        model.addAttribute("question","What do you want to do?");
-        LOGGER.info("Method start. UserController.");
-        return "welcome";
-    }
 
-
-    @GetMapping("/allUsers")
-    public String getAllUsers(Model model) throws HandlerException {
+    @GetMapping("/users")
+    public  List<User> getAllUsers() throws HandlerException {
 
         List<User> allUsers = userService.getAllUsers();
-        List<UserAccount> allAccounts = userAccountService.getAllAccounts();
         LOGGER.debug("get all users => {}", allUsers);
-        LOGGER.debug("get all users => {}", allAccounts);
-        model.addAttribute("allUsers", allUsers);
-        model.addAttribute("allAccounts", allAccounts);
-        model.addAttribute("heading", "List of all users in DB");
-        LOGGER.info("Method start. UserController (-- / --)");
-        return "list_users";
+        List<User> jsonList=new ArrayList<>();
+        for (User u: allUsers){
+            User user=new User();
+            user.setId(u.getId());
+            user.setName(u.getName());
+            user.setEmail(u.getEmail());
+            jsonList.add(user);
+        }
+        return jsonList;
     }
 
-    @GetMapping("/user/{id}")
-    public String getUser(@PathVariable("id") int id,Model model) {
+    @GetMapping("/id/{id}")
+    public User getUser(@PathVariable("id") int id) {
 
         LOGGER.debug("get user with id => {}", id);
         User user=userService.getUserById(id);
-        List<User> list=new LinkedList<>();
-        list.add(user);
-        model.addAttribute("allUsers",list);
-        model.addAttribute("heading", "User with id "+id);
         LOGGER.info("Method start. UserController.");
-        return "list_users";
+        return user;
     }
 
-    @GetMapping("/email")
-    public String getByEmail() {
-        return "find_by_email";
-    }
 
-    @GetMapping("/user/email")
-    public String getUserByEmail(@RequestParam("email") String email,Model model) {
+    @GetMapping("/email/{email}")
+    public User getUserByEmail(@PathVariable (name="email") String email) {
 
         LOGGER.debug("get user with => {}", email);
         User user=userService.getUserByEmail(email);
         List<User> list=new LinkedList<>();
         list.add(user);
-        model.addAttribute("message",user.toString());
-        model.addAttribute("allUsers",list);
-        model.addAttribute("heading", "User with email "+email);
         LOGGER.info("Method start. UserController.");
-
-        return "list_users";
+        return user;
     }
 
 
-    @GetMapping("/user/name")
-    public String getUserByName(@RequestParam("name") String name,Model model) {
+    @GetMapping("/name/{name}")
+    public List<User> getUserByName(@PathVariable (name="name") String name) throws HandlerException {
 
         LOGGER.debug("get user with name => {}", name);
         List<User> allUsers=userService.getUsersByName(name,1,1);
-        model.addAttribute("allUsers",allUsers);
-        model.addAttribute("heading", "User(s) with name "+name);
         LOGGER.info("Method start. UserController.");
-
-        return "facade";
+        List<User> jsonList=new ArrayList<>();
+        for (User u: allUsers){
+            User user=new User();
+            user.setId(u.getId());
+            user.setName(u.getName());
+            user.setEmail(u.getEmail());
+            jsonList.add(user);
+        }
+        return jsonList;
     }
 
 
-    @GetMapping("/updateUser")
-    public String updateUserById(@RequestParam("name") String name,@RequestParam("id") long id,@RequestParam("email") String email,@RequestParam("wallet") double wallet, Model model) throws HandlerException {
+    @PutMapping("/update/{wallet}")
+    public User updateUserById(@RequestBody User user, @PathVariable ("wallet") double wallet) throws HandlerException {
 
-            LOGGER.debug("Update user with name ({}) and email ({})", name, email);
-            User user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setId(id);
-            userService.updateUser(user);
-            userAccountService.updateMoney(user, wallet);
-           LOGGER.info("Method start. UserController.");
-            return "redirect:/";
+         userService.updateUser(user);
+         userAccountService.updateMoney(user, wallet);
+         LOGGER.info("Method start. UserController.");
+         return user;
 
     }
 
-    @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") long id, Model model) {
-        LOGGER.debug("Update user with id ({}) ", id);
-        model.addAttribute("user", id);
-        LOGGER.info("Method start. UserController.");
-        return "update_user";
-    }
 
 
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id,Model model) {
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
         LOGGER.debug("Delete user with id ({}) ", id);
         userService.deleteUser(id);
-        model.addAttribute("message","User with id "+id);
-        model.addAttribute("allUsers",null);
-        model.addAttribute("heading", "Delete: ");
         LOGGER.info("Method start. UserController.");
-        return "facade";
+        return "Delete user with id - "+id;
     }
 
-    @GetMapping("/create")
-    public String name(@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("wallet") double wallet) throws HandlerException {
-        LOGGER.debug("Create user with name ({}) and email ({})", name, email);
-        User user = new User();
-
-        user.setName(name);
-        user.setEmail(email);
+    @PostMapping("/create/{wallet}")
+    public User name(@RequestBody User user, @PathVariable ("wallet") double wallet) throws HandlerException {
         User u=userService.createUser(user);
-
         UserAccount userAccount=new UserAccount();
         int userId= (int) u.getId();
         userAccount.setUserId(userId);
         userAccount.setMoney(wallet);
         userAccountService.createAccount(userAccount);
-
         LOGGER.info("Method start. UserController.");
-        return "redirect:/";
-    }
-
-    @GetMapping("/new")
-    public String create() {
-        LOGGER.debug("Create new user ");
-        return "new_user";
+        return u;
     }
 
 

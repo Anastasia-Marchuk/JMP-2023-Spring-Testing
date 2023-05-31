@@ -7,7 +7,7 @@
 
 
     <groupId>jmp.amarchuk</groupId>
-    <artifactId>JMP-2023-Spring-Data-Access</artifactId>
+    <artifactId>JMP-2023-Spring-Testing</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

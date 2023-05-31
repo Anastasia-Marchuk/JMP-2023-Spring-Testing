@@ -32,7 +32,7 @@ public class UserDaoList implements UserDao {
     @Override
     public User getUserById(long userId) {
         Session currentSession=sessionFactory.getCurrentSession();
-        Query<User> theQuery=currentSession.createQuery("from user where id=:userId", User.class);
+        Query<User> theQuery=currentSession.createQuery("from User where id=:userId", User.class);
         theQuery.setParameter("userId", userId);
         List<User> userbyId = new ArrayList<>();
         userbyId=theQuery.getResultList();
@@ -42,8 +42,8 @@ public class UserDaoList implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         Session currentSession=sessionFactory.getCurrentSession();
-        Query<User> theQuery=currentSession.createQuery("from User where email=:emailName", User.class);
-        theQuery.setParameter("emailName", email);
+        Query<User> theQuery=currentSession.createQuery("from User where email=:email", User.class);
+        theQuery.setParameter("email", email);
         List<User> userbyEmail = new ArrayList<>();
         userbyEmail=theQuery.getResultList();
         return userbyEmail.get(0);

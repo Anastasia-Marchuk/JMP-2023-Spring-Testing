@@ -73,5 +73,23 @@ ENGINE= InnoDB;
  Insert into Ticket (id, eventId, userId,category, place) values (1,1,1,1,1);
  
  and others..
+ 
+ ## How to test REST endpoints in Postman:
+ 1. To delete user - use Delete method, write url 'http://localhost:8085/api/user/delete/2' (where 2 is id of user)
+ 2. To create User - use Post method, write url 'http://localhost:8085/api/user/create/1200' (where 1200 is the wallet of new user) 
+ and put in the body json with data of new user:
+ {
+ "name" : "JSONname",
+ "email" : "JSON@gmail.com"
+ } 
+ 3. To update User - use Put method, write url 'http://localhost:8085/api/user/update/999' (where 1200 is the wallet of new user) 
+  and put in the body json with data of new user:
+ {
+ "id":13,
+ "name" : "JSONname",
+ "email" : "JSON@gmail.com"
+}
+ 
+ 
 
 
